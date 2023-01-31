@@ -155,7 +155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533e984865e46a44ebaa8ff89fef1549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 15
+  evaderObj: {fileID: 1221926702}
+  playerRef: {fileID: 1221926703}
 --- !u!136 &87181188
 CapsuleCollider:
   m_ObjectHideFlags: 0
