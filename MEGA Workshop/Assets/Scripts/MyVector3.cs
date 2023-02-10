@@ -112,6 +112,16 @@ public class MyVector3
     {
         return VectorDivisor(lhs, rhs);
     }
+    public static MyVector3 EulerAnglesToDirection(MyVector3 Euler)
+    {
+        MyVector3 returnValue = new MyVector3(0, 0, 0);
+
+        returnValue.x = Mathf.Cos(Euler.y) * Mathf.Cos(Euler.x);
+        returnValue.y = Mathf.Sin(Euler.x);
+        returnValue.z = Mathf.Cos(Euler.x) * Mathf.Sin(Euler.y);
+
+        return returnValue;
+    }
     public Vector3 ToUnityVector()
     {
         Vector3 returnVal = new Vector3();
