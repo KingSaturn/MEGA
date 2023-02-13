@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    MyVector3 eulerAngle = new MyVector3(0,0,0);
+    MyVector3 direction = new MyVector3(0,0,0);
     [System.NonSerialized] public float cameraSpeed = 2.0f;
     MyVector3 objectVelocity = new MyVector3(0,0,0);
     [SerializeField] Camera cam;
@@ -21,12 +23,18 @@ public class PlayerController : MonoBehaviour
 
         float h = cameraSpeed * Input.GetAxis("Mouse X");
         float v = -cameraSpeed * Input.GetAxis("Mouse Y");
-        MyVector3 currentForward = FromUnityVector(transform.forward);
+        transform.Rotate(0, h, 0);
+        cam.transform.Rotate(v, 0, 0);
+
+        //Vector2 posV2 = direction.FromMyVector3();
+        //float rotation = MathsLib.VectorToRadians(posV2);
+        //Vector2 newPosV2 = MathsLib.RadiansToVector(rotation);
+
         MyVector3 forwardNorm = currentForward.NormalizeMyVector();
-        MyVector3 currentRight = FromUnityVector(transform.right);
-        MyVector3 rightNorm = currentRight.NormalizeMyVector();
+        //MyVector3 currentRight = FromUnityVector(transform.right);
+        //MyVector3 rightNorm = currentRight.NormalizeMyVector();
         MyVector3 newPos = FromUnityVector(transform.position);
-        MyVector3 forwardVelocity = forwardNorm * speed * Time.deltaTime;
+        //MyVector3 forwardVelocity = forwardNorm * speed * Time.deltaTime;
         MyVector3 rightVelocity = rightNorm * speed * Time.deltaTime;
         if (Input.GetKey(KeyCode.W))
         {
@@ -50,8 +58,6 @@ public class PlayerController : MonoBehaviour
         }
         Vector3 v3Pos = newPos.ToUnityVector();
         transform.position = v3Pos;
-        transform.Rotate(0, h, 0);
-        cam.transform.Rotate(v, 0, 0);
     }
     private void SetVelocity(MyVector3 velocity)
     {
@@ -70,5 +76,13 @@ public class PlayerController : MonoBehaviour
         returnVal.y = Input.y;
         returnVal.z = Input.z;
         return returnVal;
+    }
+    public MyVector3 FromVector2(Vector2 input)
+    {
+        MyVector3 output = new MyVector3(0, 0, 0);
+
+        output.x = input.x;
+        output.y = input.y;
+        return output;
     }
 }

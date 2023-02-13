@@ -130,4 +130,13 @@ public class MyVector3
         returnVal.z = z;
         return returnVal;
     }
+    public Vector2 FromMyVector3()
+    {
+        Vector2 output = new Vector2();
+
+        output.x = x;
+        output.y = y;
+
+        return output;
+    }
 }
