@@ -27,7 +27,7 @@ public class MathsLib : MonoBehaviour
 
         return rv;
     }
-    public static MyVector3 myLerp(MyVector3 a, MyVector3 b, float t)
+    public static MyVector3 MyLerp(MyVector3 a, MyVector3 b, float t)
     {
         MyVector3 c = new MyVector3(0, 0, 0);
         c = a * (1.0f - t) + b * t;

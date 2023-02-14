@@ -13,18 +13,16 @@ public class Interpolate : MonoBehaviour
     }
     private void Update()
     {
-        MyVector3 currentPos = FromUnityVector(transform.position);
-        MyVector3 newPos = new MyVector3(0, 0, 0); 
-
-        MyVector3 direction = currentPos - newPos;
+        MyVector3 currentPos = FromUnityVector(transform.forward);
+        MyVector3 targetPosition = new MyVector3(0, 0, 20);
+        MyVector3 direction = currentPos + targetPosition;
         MyVector3 directionNorm = direction.NormalizeMyVector();
 
-        MyVector3 velocity = directionNorm * speed * Time.deltaTime;
-
-        if (MyVector3.DotProduct(direction, velocity) >= 0.5)
+        MyVector3 velocity = MathsLib.MyLerp(currentPos, directionNorm, 0.5f) * speed * Time.deltaTime;
+        Vector3 v3newPos = transform.position + velocity.ToUnityVector();
+        if(v3newPos.z < 20.0f)
         {
-            Vector3 v3newPos = transform.position + velocity.ToUnityVector();
-            transform.position = v3newPos;
+            transform.position = v3newPos; 
         }
     }
     public MyVector3 FromUnityVector(Vector3 Input)
