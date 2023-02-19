@@ -6,16 +6,20 @@ using UnityEngine;
 public class Interpolate : MonoBehaviour
 {
     public float speed;
-
+    public float targetX;
+    public float targetY;
+    public float targetZ;
+    public MyVector3 targetPosition = new MyVector3(0,0,0);
     private void Start()
     {
-
+        targetPosition.x = targetX;
+        targetPosition.y = targetY;
+        targetPosition.z = targetZ;
     }
     private void Update()
     {
         MyVector3 currentPos = FromUnityVector(transform.forward);
-        MyVector3 targetPosition = new MyVector3(0, 0, 20);
-        MyVector3 direction = currentPos + targetPosition;
+        MyVector3 direction = targetPosition - currentPos;
         MyVector3 directionNorm = direction.NormalizeMyVector();
 
         MyVector3 velocity = MathsLib.MyLerp(currentPos, directionNorm, 0.5f) * speed * Time.deltaTime;
