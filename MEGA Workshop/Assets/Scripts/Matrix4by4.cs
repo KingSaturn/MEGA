@@ -65,4 +65,25 @@ public class Matrix4by4
 
         return output;
     }
+    public static Matrix4by4 operator *(Matrix4by4 lhs, Matrix4by4 rhs)
+    {
+        Matrix4by4 output = new Matrix4by4(new Vector4(), new Vector4(), new Vector4(), new Vector4());
+
+        for(int i = 0; i < 3; i++)
+        {
+            for(int t = 0; t < 3; t++)
+            {
+                output.values[i,t] = (lhs.values[i,0] * rhs.values[0,t]) + (lhs.values[i,1] * rhs.values[1,t]) + (lhs.values[i,2] * rhs.values[2,t]) + (lhs.values[i,3] * rhs.values[3,t]);
+            }
+        }
+        return output;
+        //output.values[0,0] = (lhs.values[0,0] * rhs.values[0,0]) + (lhs.values[0,1] * rhs.values[1,0]) + (lhs.values[0,2] * rhs.values[2,0]) + (lhs.values[0,3] * rhs.values[3,0]);
+        //output.values[0,1] = (lhs.values[0,0] * rhs.values[0,1]) + (lhs.values[0,1] * rhs.values[1,1]) + (lhs.values[0,2] * rhs.values[2,1]) + (lhs.values[0,3] * rhs.values[3,1]);
+        //output.values[0,2] = (lhs.values[0,0] * rhs.values[0,2]) + (lhs.values[0,1] * rhs.values[1,2]) + (lhs.values[0,2] * rhs.values[2,2]) + (lhs.values[0,3] * rhs.values[3,2]);
+        //output.values[0,3] = (lhs.values[0,0] * rhs.values[0,3]) + (lhs.values[0,1] * rhs.values[1,3]) + (lhs.values[0,2] * rhs.values[2,3]) + (lhs.values[0,3] * rhs.values[3,3]);
+
+        //output.values[1,0] = (lhs.values[1,0] * rhs.values[0,0]) + (lhs.values[1,1] * rhs.values[1,0]) + (lhs.values[1,2] * rhs.values[2,0]) + (lhs.values[1,3] * rhs.values[3,0]);
+        //output.values[1,1] = (lhs.values[1,0] * rhs.values[0,1]) + (lhs.values[1,1] * rhs.values[1,1]) + (lhs.values[1,2] * rhs.values[2,1]) + (lhs.values[1,3] * rhs.values[3,1]);
+        //output.values[1,2] = (lhs.values[1,0] * rhs.values[0,2]) + (lhs.values[1,1] * rhs.values[2,2]) + (lhs.values[1,3] * rhs.values[2,2]);
+    }
 }
