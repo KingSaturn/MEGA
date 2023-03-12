@@ -15,9 +15,9 @@ public class Matrix4by4
         values[3, 0] = column1.w;
 
         values[0,1] = column2.x;
-        values[1,2] = column2.y;
-        values[2,3] = column2.z;
-        values[3,4] = column2.w;
+        values[1,1] = column2.y;
+        values[2,1] = column2.z;
+        values[3,1] = column2.w;
 
         values[0, 2] = column3.x;
         values[1, 2] = column3.y;
