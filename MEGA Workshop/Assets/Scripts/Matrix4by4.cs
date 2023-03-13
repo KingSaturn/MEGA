@@ -69,9 +69,9 @@ public class Matrix4by4
     {
         Matrix4by4 output = new Matrix4by4(new Vector4(), new Vector4(), new Vector4(), new Vector4());
 
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 4; i++)
         {
-            for(int t = 0; t < 3; t++)
+            for(int t = 0; t < 4; t++)
             {
                 output.values[i,t] = (lhs.values[i,0] * rhs.values[0,t]) + (lhs.values[i,1] * rhs.values[1,t]) + (lhs.values[i,2] * rhs.values[2,t]) + (lhs.values[i,3] * rhs.values[3,t]);
             }
