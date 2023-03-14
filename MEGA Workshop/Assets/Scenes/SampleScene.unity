@@ -123,13 +123,13 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!43 &214393580
+--- !u!43 &336406146
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cube Instance
+  m_Name: Cube Instance Instance
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -690,7 +690,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946127763}
-  m_Mesh: {fileID: 214393580}
+  m_Mesh: {fileID: 336406146}
 --- !u!4 &1946127767
 Transform:
   m_ObjectHideFlags: 0
@@ -718,6 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153a43291926e624fb39a23db905848f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshInstance: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
