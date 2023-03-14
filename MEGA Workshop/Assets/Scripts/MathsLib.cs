@@ -1,9 +1,18 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MathsLib : MonoBehaviour
 {
+    public Vector3 AxisAngleRotat(float angle, Vector3 axis, Vector3 position)
+    {
+        Vector3 returnVal = (position * Mathf.Cos(angle)) + Vector3.Dot(position, axis) * axis * (1 - Mathf.Cos(angle)) + Vector3.Cross(axis, position) * Mathf.Sin(angle);
+
+        return returnVal;
+    }
+
     public static MyVector3 DegreesToRadians(MyVector3 input)
     {
         MyVector3 output = new MyVector3(0, 0, 0);

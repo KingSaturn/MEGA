@@ -5,12 +5,13 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ObjectTransformation : MonoBehaviour
 {
+    public Mesh meshInstance;
     Vector3[] modelSpaceVertices;
     public Vector3 position;
     public Vector3 rotation;
     public Vector3 scale;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         MeshFilter MF = GetComponent<MeshFilter>();
         modelSpaceVertices = MF.mesh.vertices;
