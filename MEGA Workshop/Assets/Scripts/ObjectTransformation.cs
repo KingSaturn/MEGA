@@ -14,7 +14,8 @@ public class ObjectTransformation : MonoBehaviour
     void Start()
     {
         MeshFilter MF = GetComponent<MeshFilter>();
-        modelSpaceVertices = MF.mesh.vertices;
+        MF.sharedMesh = Instantiate(meshInstance);
+        modelSpaceVertices = MF.sharedMesh.vertices;
     }
 
     // Update is called once per frame
@@ -37,9 +38,9 @@ public class ObjectTransformation : MonoBehaviour
         }
         MeshFilter MF = GetComponent<MeshFilter>();
 
-        MF.mesh.vertices = transformedMatrix;
+        MF.sharedMesh.vertices = transformedMatrix;
 
-        MF.mesh.RecalculateNormals();
-        MF.mesh.RecalculateBounds();
+        MF.sharedMesh.RecalculateNormals();
+        MF.sharedMesh.RecalculateBounds();
     }
 }
