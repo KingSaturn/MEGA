@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Matrix4by4
 {
@@ -14,10 +15,10 @@ public class Matrix4by4
         values[2, 0] = column1.z;
         values[3, 0] = column1.w;
 
-        values[0,1] = column2.x;
-        values[1,1] = column2.y;
-        values[2,1] = column2.z;
-        values[3,1] = column2.w;
+        values[0, 1] = column2.x;
+        values[1, 1] = column2.y;
+        values[2, 1] = column2.z;
+        values[3, 1] = column2.w;
 
         values[0, 2] = column3.x;
         values[1, 2] = column3.y;
@@ -69,21 +70,38 @@ public class Matrix4by4
     {
         Matrix4by4 output = new Matrix4by4(new Vector4(), new Vector4(), new Vector4(), new Vector4());
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            for(int t = 0; t < 4; t++)
+            for (int t = 0; t < 4; t++)
             {
-                output.values[i,t] = (lhs.values[i,0] * rhs.values[0,t]) + (lhs.values[i,1] * rhs.values[1,t]) + (lhs.values[i,2] * rhs.values[2,t]) + (lhs.values[i,3] * rhs.values[3,t]);
+                output.values[i, t] = (lhs.values[i, 0] * rhs.values[0, t]) + (lhs.values[i, 1] * rhs.values[1, t]) + (lhs.values[i, 2] * rhs.values[2, t]) + (lhs.values[i, 3] * rhs.values[3, t]);
             }
         }
         return output;
-        //output.values[0,0] = (lhs.values[0,0] * rhs.values[0,0]) + (lhs.values[0,1] * rhs.values[1,0]) + (lhs.values[0,2] * rhs.values[2,0]) + (lhs.values[0,3] * rhs.values[3,0]);
-        //output.values[0,1] = (lhs.values[0,0] * rhs.values[0,1]) + (lhs.values[0,1] * rhs.values[1,1]) + (lhs.values[0,2] * rhs.values[2,1]) + (lhs.values[0,3] * rhs.values[3,1]);
-        //output.values[0,2] = (lhs.values[0,0] * rhs.values[0,2]) + (lhs.values[0,1] * rhs.values[1,2]) + (lhs.values[0,2] * rhs.values[2,2]) + (lhs.values[0,3] * rhs.values[3,2]);
-        //output.values[0,3] = (lhs.values[0,0] * rhs.values[0,3]) + (lhs.values[0,1] * rhs.values[1,3]) + (lhs.values[0,2] * rhs.values[2,3]) + (lhs.values[0,3] * rhs.values[3,3]);
+    }
+    public static Matrix4by4 Transpose(Matrix4by4 inputMatrix)
+    {
+        Matrix4by4 rV = new Matrix4by4(new Vector4(), new Vector4(), new Vector4(), new Vector4());
+        rV.values[0, 0] = inputMatrix.values[0, 0];
+        rV.values[1, 0] = inputMatrix.values[0, 1];
+        rV.values[2, 0] = inputMatrix.values[0, 2];
+        rV.values[3, 0] = inputMatrix.values[0, 3];
 
-        //output.values[1,0] = (lhs.values[1,0] * rhs.values[0,0]) + (lhs.values[1,1] * rhs.values[1,0]) + (lhs.values[1,2] * rhs.values[2,0]) + (lhs.values[1,3] * rhs.values[3,0]);
-        //output.values[1,1] = (lhs.values[1,0] * rhs.values[0,1]) + (lhs.values[1,1] * rhs.values[1,1]) + (lhs.values[1,2] * rhs.values[2,1]) + (lhs.values[1,3] * rhs.values[3,1]);
-        //output.values[1,2] = (lhs.values[1,0] * rhs.values[0,2]) + (lhs.values[1,1] * rhs.values[2,2]) + (lhs.values[1,3] * rhs.values[2,2]);
+        rV.values[0, 1] = inputMatrix.values[1, 0];
+        rV.values[1, 1] = inputMatrix.values[1, 1];
+        rV.values[2, 1] = inputMatrix.values[1, 2];
+        rV.values[3, 1] = inputMatrix.values[1, 3];
+
+        rV.values[0, 2] = inputMatrix.values[2, 0];
+        rV.values[1, 2] = inputMatrix.values[2, 1];
+        rV.values[2, 2] = inputMatrix.values[2, 2];
+        rV.values[3, 2] = inputMatrix.values[2, 3];
+
+        rV.values[0, 3] = inputMatrix.values[3, 0];
+        rV.values[1, 3] = inputMatrix.values[3, 1];
+        rV.values[2, 3] = inputMatrix.values[3, 2];
+        rV.values[3, 3] = inputMatrix.values[3, 3];
+
+        return rV;
     }
 }

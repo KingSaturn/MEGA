@@ -356,6 +356,7 @@
 "Assets/Scripts/Interpolate.cs"
 "Assets/Scripts/MathsLib.cs"
 "Assets/Scripts/Matrix4by4.cs"
+"Assets/Scripts/Menu.cs"
 "Assets/Scripts/MoveScript.cs"
 "Assets/Scripts/MyVector3.cs"
 "Assets/Scripts/ObjectTransformation.cs"
