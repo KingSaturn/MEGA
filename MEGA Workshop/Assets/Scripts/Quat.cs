@@ -71,4 +71,23 @@ public class Quat
         y = input.y;
         z = input.z;
     }
+    public Matrix4by4 ToRotationMatrix()
+    {
+        Matrix4by4 rv = new Matrix4by4(new Vector3(), new Vector3(), new Vector3(), Vector3.zero);
+        rv.values[0,0] = 1 - 2 * ((y * y) + (z * z));
+        rv.values[1, 0] = 2 * ((x * y) - (z * w));
+        rv.values[2, 0] = 2 * ((x * z) + (y * w));
+
+        rv.values[0, 1] = 2 * ((x * y) + (z * w));
+        rv.values[1, 1] = 1 - 2 * ((x * x) + (z * z));
+        rv.values[2, 1] = 2 * ((y + z) - (x * w));
+
+        rv.values[0, 2] = 2 * ((x * z) - (y * w));
+        rv.values[1, 2] = 2 * ((y * z) + (x * w));
+        rv.values[2, 2] = 1 - 2 * ((x * x) + (y * y));
+
+        rv.values[3, 0] = rv.values[3, 1] = rv.values[3, 2] = rv.values[0, 3] = rv.values[1, 3] = rv.values[2, 3] = 0;
+        rv.values[3, 3] = 1;
+        return rv;
+    }
 }
