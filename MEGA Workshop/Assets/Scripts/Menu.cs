@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
     public GameObject CubeItem;
     public GameObject CapsuleItem;
+    public GameObject CylinderItem;
     public TMPro.TextMeshProUGUI itemText;
     void Start()
     {
-        itemText.text = "Cube";
-        CubeItem.SetActive(true);
+        itemText.text = "Pick an Item";
+        CubeItem.SetActive(false);
         CapsuleItem.SetActive(false);
+        CylinderItem.SetActive(false);
     }
 
     void Update()
@@ -23,18 +26,21 @@ public class Menu : MonoBehaviour
         itemText.text = "Cube";
         CubeItem.SetActive(true);
         CapsuleItem.SetActive(false);
+        CylinderItem.SetActive(false);
     }
     public void CapsuleButton()
     {
         itemText.text = "Capsule";
-        CapsuleItem.SetActive(true);
         CubeItem.SetActive(false);
+        CapsuleItem.SetActive(true);
+        CylinderItem.SetActive(false);
     }
-    public void NullButton()
+    public void CylinderButton()
     {
-        itemText.text = "NULL";
+        itemText.text = "Cylinder";
         CubeItem.SetActive(false);
         CapsuleItem.SetActive(false);
+        CylinderItem.SetActive(true);
     }
     
 }

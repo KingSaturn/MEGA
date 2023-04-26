@@ -18,11 +18,40 @@ public class ObjectTransformation : MonoBehaviour
         MeshFilter MF = GetComponent<MeshFilter>();
         MF.sharedMesh = Instantiate(meshInstance);
         modelSpaceVertices = MF.sharedMesh.vertices;
+        if (gameObject.activeSelf)
+        {
+            scale.x = 1;
+            scale.y = 1;
+            scale.z = 1;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(1))
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
+
+        }
+        if(Input.GetMouseButtonUp(1))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        if (scale.x >= 0 && scale.y >= 0 && scale.z >= 0)
+        {
+            scale.x = scale.x + Input.mouseScrollDelta.y / 10;
+            scale.y = scale.y + Input.mouseScrollDelta.y / 10;
+            scale.z = scale.z + Input.mouseScrollDelta.y / 10;
+        }
+        else
+        {
+            scale.x = 0;
+            scale.y = 0;
+            scale.z = 0;
+        }
         Vector3[] transformedMatrix = new Vector3[modelSpaceVertices.Length];
 
         //Matrix4by4 rollMatrix = new Matrix4by4(new Vector3(Mathf.Cos(rotation.z), Mathf.Sin(rotation.z), 0), new Vector3(-Mathf.Sin(rotation.z), Mathf.Cos(rotation.z), 0), new Vector3(0, 0, 1), Vector3.zero);
