@@ -96,6 +96,14 @@ public class MyVector3
         }
         return returnVal;
     }
+    public static float AngleBetweenVectors(MyVector3 lhs, MyVector3 rhs)
+    {
+        float dotP = MyVector3.DotProduct(lhs, rhs);
+        float magP = lhs.Length() * rhs.Length();
+        float angle = Mathf.Acos(dotP / magP);
+        float angleInDeg = angle * (180/Mathf.PI);
+        return angleInDeg;
+    }
     public static MyVector3 operator+(MyVector3 lhs, MyVector3 rhs)
     {
         return AddVector(lhs, rhs);

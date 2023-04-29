@@ -79,6 +79,16 @@ public class Matrix4by4
         }
         return output;
     }
+    public  Matrix4by4 setColumn(int index, Vector4 input)
+    {
+        Matrix4by4 returnValue = new Matrix4by4(new Vector4(), new Vector4(), new Vector4(), new Vector4());
+
+        returnValue.values[index, 0] = input.x;
+        returnValue.values[index, 1] = input.y;
+        returnValue.values[index, 2] = input.z;
+        returnValue.values[index, 3] = input.w;
+        return returnValue;
+    }
     public static Matrix4by4 Transpose(Matrix4by4 inputMatrix)
     {
         Matrix4by4 rV = new Matrix4by4(new Vector4(), new Vector4(), new Vector4(), new Vector4());
@@ -103,5 +113,46 @@ public class Matrix4by4
         rV.values[3, 3] = inputMatrix.values[3, 3];
 
         return rV;
+    }
+    public static Quat Matrix4by4ToQuat(Matrix4by4 inputMatrix)
+    {
+        float t = 1 + inputMatrix.values[0,0] + inputMatrix.values[1,1] + inputMatrix.values[2,2];
+        float w, x, y, z;
+        if(t > 0.00000001)
+        {
+            float s = Mathf.Sqrt(t * 2.0f);
+            x = (inputMatrix.values[2, 1] - inputMatrix.values[1, 2]) / s;
+            y = (inputMatrix.values[0, 2] - inputMatrix.values[2, 0]) / s;
+            z = (inputMatrix.values[1, 0] - inputMatrix.values[0, 1]) / s;
+            w = 0.25f * s;
+        }
+        else
+        {
+            if(inputMatrix.values[0,0] > inputMatrix.values[1,1] && inputMatrix.values[0,0] > inputMatrix.values[2,2])
+            {
+                float s = Mathf.Sqrt(1.0f + inputMatrix.values[0, 0] - inputMatrix.values[1, 1] - inputMatrix.values[2, 2]) * 2;
+                x = 0.25f * s;
+                y = (inputMatrix.values[1, 0] + inputMatrix.values[0, 1]) / s;
+                z = (inputMatrix.values[0, 2] + inputMatrix.values[2, 0]) / s;
+                w = (inputMatrix.values[3, 1] + inputMatrix.values[1, 3]) / s;
+            }
+            else if(inputMatrix.values[1,1] > inputMatrix.values[2, 2])
+            {
+                float s = Mathf.Sqrt(1.0f + inputMatrix.values[1,1] - inputMatrix.values[0,0] - inputMatrix.values[2,2]) * 2;
+                x = (inputMatrix.values[1, 0] + inputMatrix.values[0,1]) / s;
+                y = 0.25f * s;
+                z = (inputMatrix.values[3, 1] + inputMatrix.values[1,3]) / s;
+                w = (inputMatrix.values[0, 2] + inputMatrix.values[2,0]) / s;
+            }
+            else
+            {
+                float s = Mathf.Sqrt(1.0f + inputMatrix.values[2, 2] - inputMatrix.values[0, 0] - inputMatrix.values[1, 1]);
+                x = (inputMatrix.values[0, 2] + inputMatrix.values[2, 0]) / s;
+                y = 0.25f * s;
+                z = (inputMatrix.values[3, 1] + inputMatrix.values[1, 3]) / s;
+                w = (inputMatrix.values[1, 0] + inputMatrix.values[0, 1]) / s;
+            }
+        }
+        return new Quat(w, x, y, z);
     }
 }

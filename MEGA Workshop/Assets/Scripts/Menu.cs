@@ -8,6 +8,8 @@ public class Menu : MonoBehaviour
     public GameObject CubeItem;
     public GameObject CapsuleItem;
     public GameObject CylinderItem;
+    public ObjectTransformation transformRef;
+    public Camera cam;
     public TMPro.TextMeshProUGUI itemText;
     void Start()
     {
@@ -19,7 +21,23 @@ public class Menu : MonoBehaviour
 
     void Update()
     {
-        
+        //if(CubeItem.activeSelf)
+        //{
+        //    transformRef = CubeItem.GetComponent<ObjectTransformation>();
+        //}
+        if(Input.GetMouseButton(1))
+        {
+            Vector2 screenPostion = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            transformRef.rotation.y += -screenPostion.x;
+            transformRef.rotation.x += screenPostion.y;
+
+            float targetRotationX = transform.rotation.y - screenPostion.x;
+            float targetRotationY = transform.rotation.x + screenPostion.y;
+
+
+        }
+
+
     }
     public void CubeButton()
     {

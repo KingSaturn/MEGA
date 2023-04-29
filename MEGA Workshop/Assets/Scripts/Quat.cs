@@ -22,6 +22,13 @@ public class Quat
         y = axis.y;
         z = axis.z;
     }
+    public Quat(float iw, float ix, float iy, float iz)
+    {
+        w = iw;
+        x = ix;
+        y = iy;
+        z = iz;
+    }
     public static Quat operator*(Quat lhs, Quat rhs)
     {
         Quat returnV = new Quat(0, new Vector3());
@@ -39,6 +46,15 @@ public class Quat
         Quat dT = new Quat(AxisAngle.w * t, new Vector3(AxisAngle.x, AxisAngle.y, AxisAngle.z));
 
         return dT * q;
+    }
+    public static Quat FromUnityQuat(Quaternion input)
+    {
+        Quat output = new Quat(0, 0, 0, 0);
+        output.w = input.w;
+        output.x = input.x;
+        output.y = input.y;
+        output.z = input.z;
+        return output;
     }
     public Vector4 AxisFromQuat()
     {
@@ -91,5 +107,21 @@ public class Quat
 
         Matrix4by4 output = Matrix4by4.Transpose(rv);
         return output;
+    }
+    public static Quat LookRotation(MyVector3 forward, MyVector3 upwards)
+    {
+        forward.NormalizeMyVector();
+        MyVector3 right = MathsLib.CrossProduct(upwards, forward);
+        right.NormalizeMyVector();
+
+        MyVector3 up = MathsLib.CrossProduct(forward, right);
+
+        Matrix4by4 rotation = new Matrix4by4(new Vector4(), new Vector4(), new Vector4(), new Vector4());
+        rotation.setColumn(0, new Vector4(right.x, right.y, right.z, 0));
+        rotation.setColumn(1, new Vector4(up.x, up.y, up.z, 0));
+        rotation.setColumn(2, new Vector4(forward.x, forward.y, forward.z, 0));
+        rotation.setColumn(3, new Vector4(0, 0, 0, 1));
+        Quat returnValue = Matrix4by4.Matrix4by4ToQuat(rotation);
+        return returnValue;
     }
 }
