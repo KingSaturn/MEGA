@@ -68,4 +68,23 @@ public class MathsLib : MonoBehaviour
     {
         return MathF.Sqrt((v.x * v.x) + (v.y * v.y));
     }
+    public static Vector4 AxisFromQuat(Quaternion q)
+    {
+        Vector4 returnVector = new Vector4();
+        float halfAngle = Mathf.Acos(q.w);
+        returnVector.w = halfAngle * 2;
+        returnVector.x = q.x / Mathf.Sin(halfAngle);
+        returnVector.y = q.y / Mathf.Sin(halfAngle);
+        returnVector.z = q.z / Mathf.Sin(halfAngle);
+        return returnVector;
+    }
+    public static Quaternion ToUnityQuat(Quat input)
+    {
+        Quaternion output = new Quaternion(0, 0, 0, 0);
+        output.w = input.w;
+        output.x = input.x;
+        output.y = input.y;
+        output.z = input.z;
+        return output;
+    }
 }

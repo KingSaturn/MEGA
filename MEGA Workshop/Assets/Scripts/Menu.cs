@@ -10,15 +10,18 @@ public class Menu : MonoBehaviour
     public GameObject CubeItem;
     public GameObject CapsuleItem;
     public GameObject CylinderItem;
+    private GameObject activeObject;
     public ObjectTransformation transformRef;
     public Camera cam;
     public TMPro.TextMeshProUGUI itemText;
-    Vector2 lastPosition;
+    Vector2 lastDirection;
     Vector2 currentDirection;
     Vector2 direction;
+    Quaternion cQuat;
     Quat currentQuat;
     Quat outputQuat;
     Vector4 outputVector;
+    Vector2 newDirection;
     void Start()
     {
         itemText.text = "Pick an Item";
@@ -30,39 +33,65 @@ public class Menu : MonoBehaviour
 
     void Update()
     {
-        //if(CubeItem.activeSelf)
-        //{
-        //    transformRef = CubeItem.GetComponent<ObjectTransformation>();
-        //}
-        currentQuat = transformRef.GetQuat();
+        if (CubeItem.activeSelf)
+        {
+            transformRef = CubeItem.GetComponent<ObjectTransformation>();
+            activeObject = CubeItem;
+        }
+        else if (CapsuleItem.activeSelf)
+        {
+            transformRef = CapsuleItem.GetComponent<ObjectTransformation>();
+            activeObject = CapsuleItem;
+        }
+        else if (CylinderItem.activeSelf)
+        {
+            transformRef = CylinderItem.GetComponent<ObjectTransformation>();
+            activeObject = CylinderItem;
+        }
+        else
+        {
+            return;
+        }
+        currentQuat = transformRef.GetCurrentQuat();
+
         if(Input.GetMouseButton(1))
         {
+            lastDirection = currentDirection;
             currentDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+
+            newDirection = (currentDirection - lastDirection) / 10.0f;
 
             //transformRef.rotation.y += -screenPostion.x;
             //transformRef.rotation.x += screenPostion.y;
 
             //float targetRotationX = transform.rotation.y - screenPostion.x;
             //float targetRotationY = transform.rotation.x + screenPostion.y;
+            if(newDirection != Vector2.zero)
+            {
 
-            Vector3 outputAxis = MathsLib.CrossProduct(currentDirection);
+                float angle = MathsLib.Length(newDirection);
 
-            float angle = MathsLib.Length(currentDirection);
+                Vector3 outputAxis = MathsLib.CrossProduct(-newDirection.normalized);
 
-            outputQuat = new Quat(angle, outputAxis);
-            Quat resultQuat = outputQuat * currentQuat;
-            outputVector = resultQuat.AxisFromQuat();
 
-            //transformRef.angle = outputVector.w;
-            //transformRef.rotation.x = outputVector.x;
-            //transformRef.rotation.y = outputVector.y;
-            //transformRef.rotation.z = outputVector.z;
+                outputQuat = new Quat(angle, outputAxis);
 
-            lastPosition = currentDirection;
+                Quat resultQuat = outputQuat * currentQuat;
 
-            Debug.Log(resultQuat.w);
+                outputVector = resultQuat.AxisFromQuat();
+
+
+                //outputQuat = new Quaternion(outputAxis.x, outputAxis.y, outputAxis.z, angle);
+                //Quaternion resultQuat = outputQuat * cQuat;
+
+                //outputVector = MathsLib.AxisFromQuat(resultQuat);
+
+                transformRef.angle += outputVector.w;
+                transformRef.rotation.x = outputVector.x;
+                transformRef.rotation.y = outputVector.y;
+                transformRef.rotation.z = outputVector.z;
+            }
         }
-
     }
     public void CubeButton()
     {

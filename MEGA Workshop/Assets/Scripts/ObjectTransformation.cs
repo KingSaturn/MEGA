@@ -2,29 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-[ExecuteInEditMode]
 public class ObjectTransformation : MonoBehaviour
 {
     public Mesh meshInstance;
     Vector3[] modelSpaceVertices;
-
+    public GameObject currentObject;
     public Vector3 position;
     public Vector3 rotation;
     public Vector3 scale;
 
-    [System.NonSerialized]public Quat currentQuat;
-
-    [System.NonSerialized]public float angleX;
-    [System.NonSerialized]public float angleY;
-    [System.NonSerialized]public float angleZ;
 
     public float angle;
+    private Quat rotationQuat;
 
     void Start()
     {
         MeshFilter MF = GetComponent<MeshFilter>();
         MF.sharedMesh = Instantiate(meshInstance);
         modelSpaceVertices = MF.sharedMesh.vertices;
+        rotationQuat = new Quat(0,0,0,0);
         if (gameObject.activeSelf)
         {
             scale.x = 1;
@@ -60,9 +56,6 @@ public class ObjectTransformation : MonoBehaviour
             scale.z = 0;
         }
 
-
-
-
         Vector3[] transformedMatrix = new Vector3[modelSpaceVertices.Length];
 
         //Matrix4by4 rollMatrix = new Matrix4by4(new Vector3(Mathf.Cos(rotation.z), Mathf.Sin(rotation.z), 0), new Vector3(-Mathf.Sin(rotation.z), Mathf.Cos(rotation.z), 0), new Vector3(0, 0, 1), Vector3.zero);
@@ -82,7 +75,9 @@ public class ObjectTransformation : MonoBehaviour
         //Matrix4by4 yawMatrix = yawQuat.ToRotationMatrix();
 
         //Matrix4by4 rotationMatrix = yawMatrix * (pitchMatrix * rollMatrix);
-        Quat rotationQuat = new Quat(angle, rotation);
+
+        rotationQuat = new Quat(angle, rotation);
+
         Matrix4by4 rotationMatrix = rotationQuat.ToRotationMatrix();
         Matrix4by4 scaleMatrix = new Matrix4by4(new Vector3(1, 0, 0) * scale.x, new Vector3(0, 1, 0) * scale.y, new Vector3(0, 0, 1) * scale.z, Vector3.zero);
         Matrix4by4 translationMatrix = new Matrix4by4(new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1), new Vector3(position.x, position.y, position.z));
@@ -117,8 +112,10 @@ public class ObjectTransformation : MonoBehaviour
         Matrix4by4 returnValue = new Matrix4by4(new Vector3(1, 0, 0) / scale.x, new Vector3(0, 1, 0) / scale.y, new Vector3(0, 0, 1) / scale.z, Vector3.zero);
         return returnValue;
     }
-    public Quat GetQuat()
+    public Quat GetCurrentQuat()
     {
-        return new Quat(angle, rotation);
+        Quat rv = new Quat(0, 0, 0, 0);
+        Quat.FromUnityQuat(currentObject.transform.rotation);
+        return rv;
     }
 }

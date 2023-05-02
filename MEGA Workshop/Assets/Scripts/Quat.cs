@@ -24,19 +24,20 @@ public class Quat
     }
     public Quat(float iw, float ix, float iy, float iz)
     {
-        w = iw;
-        x = ix;
-        y = iy;
-        z = iz;
+        float halfAngle = iw / 2;
+        w = Mathf.Cos(halfAngle);
+        x = ix * Mathf.Sin(halfAngle);
+        y = iy * Mathf.Sin(halfAngle);
+        z = iz * Mathf.Sin(halfAngle);
     }
-    public static Quat operator*(Quat lhs, Quat rhs)
+    public static Quat operator*(Quat r, Quat s)
     {
-        Quat returnV = new Quat(0, new Vector3());
-        returnV.w = rhs.w * lhs.w + ((rhs.x * lhs.x) + (rhs.y * lhs.y) + (rhs.z * lhs.z));
-        returnV.x = rhs.w * lhs.x + (lhs.w * rhs.x) + ((lhs.y * rhs.z) - (lhs.z * rhs.y));
-        returnV.y = rhs.w * lhs.y + (lhs.w * rhs.y) + ((lhs.z * rhs.x) - (lhs.x * rhs.z));
-        returnV.z = rhs.w * lhs.z + (lhs.w * rhs.z) + ((lhs.x * rhs.y) - (lhs.y * rhs.x));
-        return returnV;
+        Quat rv = new Quat(0, new Vector3());
+        rv.w = s.w * r.w + ((s.x * r.x) + (s.y * r.y) + (s.z * r.z));
+        rv.x = s.w * r.x + (r.w * s.x) + ((r.y * s.z) - (r.z * s.y));
+        rv.y = s.w * r.y + (r.w * s.y) + ((r.z * s.x) - (r.x * s.z));
+        rv.z = s.w * r.z + (r.w * s.z) + ((r.x * s.y) - (r.y * s.x));
+        return rv;
     }
     public static Quat SLERP(Quat q, Quat r, float t)
     {
@@ -86,6 +87,14 @@ public class Quat
         x = input.x;
         y = input.y;
         z = input.z;
+    }
+    public void SetQuat(float f, Vector3 axis)
+    {
+        float halfAngle = f / 2;
+        w = Mathf.Cos(halfAngle);
+        x = axis.x * Mathf.Sin(halfAngle);
+        y = axis.y * Mathf.Sin(halfAngle);
+        z = axis.z * Mathf.Sin(halfAngle);
     }
     public Matrix4by4 ToRotationMatrix()
     {
