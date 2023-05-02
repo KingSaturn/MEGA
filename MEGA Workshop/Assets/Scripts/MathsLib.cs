@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,9 +17,9 @@ public class MathsLib : MonoBehaviour
     public static MyVector3 DegreesToRadians(MyVector3 input)
     {
         MyVector3 output = new MyVector3(0, 0, 0);
-        output.x = input.x/(180/Mathf.PI);
-        output.y = input.y/(180/Mathf.PI);
-        output.z = input.z/(180/Mathf.PI);
+        output.x = input.x / (180 / Mathf.PI);
+        output.y = input.y / (180 / Mathf.PI);
+        output.z = input.z / (180 / Mathf.PI);
 
         return output;
     }
@@ -58,5 +59,13 @@ public class MathsLib : MonoBehaviour
         c.y = a.z * b.x - a.x * b.z;
         c.z = a.x * b.y - a.y * b.x;
         return c;
+    }
+    public static Vector2 CrossProduct(Vector2 v)
+    {
+        return new Vector2(v.y, -v.x);
+    }
+    public static float Length(Vector2 v)
+    {
+        return MathF.Sqrt((v.x * v.x) + (v.y * v.y));
     }
 }

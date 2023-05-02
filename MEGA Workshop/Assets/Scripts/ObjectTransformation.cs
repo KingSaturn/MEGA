@@ -12,6 +12,7 @@ public class ObjectTransformation : MonoBehaviour
     public Vector3 rotation;
     public Vector3 scale;
 
+    [System.NonSerialized]public Quat currentQuat;
 
     [System.NonSerialized]public float angleX;
     [System.NonSerialized]public float angleY;
@@ -58,6 +59,10 @@ public class ObjectTransformation : MonoBehaviour
             scale.y = 0;
             scale.z = 0;
         }
+
+
+
+
         Vector3[] transformedMatrix = new Vector3[modelSpaceVertices.Length];
 
         //Matrix4by4 rollMatrix = new Matrix4by4(new Vector3(Mathf.Cos(rotation.z), Mathf.Sin(rotation.z), 0), new Vector3(-Mathf.Sin(rotation.z), Mathf.Cos(rotation.z), 0), new Vector3(0, 0, 1), Vector3.zero);
@@ -111,5 +116,9 @@ public class ObjectTransformation : MonoBehaviour
 
         Matrix4by4 returnValue = new Matrix4by4(new Vector3(1, 0, 0) / scale.x, new Vector3(0, 1, 0) / scale.y, new Vector3(0, 0, 1) / scale.z, Vector3.zero);
         return returnValue;
+    }
+    public Quat GetQuat()
+    {
+        return new Quat(angle, rotation);
     }
 }
