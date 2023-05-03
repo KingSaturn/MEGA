@@ -59,7 +59,7 @@ public class Menu : MonoBehaviour
             lastDirection = currentDirection;
             currentDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-            newDirection = (currentDirection - lastDirection) / 10.0f;
+            newDirection = (currentDirection - lastDirection) / 100.0f;
 
             //transformRef.rotation.y += -screenPostion.x;
             //transformRef.rotation.x += screenPostion.y;
@@ -70,10 +70,13 @@ public class Menu : MonoBehaviour
             {
 
                 float angle = MathsLib.Length(newDirection);
+                Vector3 outputAxis;
+                var direction = newDirection.normalized;
 
-                Vector3 outputAxis = MathsLib.CrossProduct(-newDirection.normalized);
-
-
+                //Vector3 outputAxis = MathsLib.CrossProduct(-newDirection.normalized);
+                outputAxis.x = direction.y;
+                outputAxis.y = -direction.x;
+                outputAxis.z = 0;
                 outputQuat = new Quat(angle, outputAxis);
 
                 Quat resultQuat = outputQuat * currentQuat;
