@@ -88,13 +88,25 @@ public class Quat
         y = input.y;
         z = input.z;
     }
-    public void SetQuat(float f, Vector3 axis)
+    public static Quat FromAxisToQuat(float f, Vector3 axis)
     {
-        float halfAngle = f / 2;
-        w = Mathf.Cos(halfAngle);
-        x = axis.x * Mathf.Sin(halfAngle);
-        y = axis.y * Mathf.Sin(halfAngle);
-        z = axis.z * Mathf.Sin(halfAngle);
+        axis = axis.normalized;
+        float sin_a = Mathf.Sin(f / 2);
+        float cos_a = Mathf.Cos(f / 2);
+        Quat rv = new Quat(0,0,0,0);
+
+        rv.x = axis.x * sin_a;
+        rv.y = axis.y * sin_a;
+        rv.z = axis.z * sin_a;
+
+        rv.w = cos_a;
+
+        return rv;
+        //float halfAngle = f / 2;
+        //w = Mathf.Cos(halfAngle);
+        //x = axis.x * Mathf.Sin(halfAngle);
+        //y = axis.y * Mathf.Sin(halfAngle);
+        //z = axis.z * Mathf.Sin(halfAngle);
     }
     public Matrix4by4 ToRotationMatrix()
     {

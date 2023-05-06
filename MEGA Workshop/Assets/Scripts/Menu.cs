@@ -52,8 +52,8 @@ public class Menu : MonoBehaviour
         {
             return;
         }
-        currentQuat = transformRef.GetCurrentQuat();
 
+        currentQuat = transformRef.GetCurrentQuat();
         if(Input.GetMouseButton(1))
         {
             lastDirection = currentDirection;
@@ -73,10 +73,7 @@ public class Menu : MonoBehaviour
                 Vector3 outputAxis;
                 var direction = newDirection.normalized;
 
-                //Vector3 outputAxis = MathsLib.CrossProduct(-newDirection.normalized);
-                outputAxis.x = direction.y;
-                outputAxis.y = -direction.x;
-                outputAxis.z = 0;
+                outputAxis = MathsLib.CrossProduct(-direction);
                 outputQuat = new Quat(angle, outputAxis);
 
                 Quat resultQuat = outputQuat * currentQuat;
@@ -93,6 +90,8 @@ public class Menu : MonoBehaviour
                 transformRef.rotation.x = outputVector.x;
                 transformRef.rotation.y = outputVector.y;
                 transformRef.rotation.z = outputVector.z;
+
+                //transformRef.v4transformation = outputVector;
             }
         }
     }

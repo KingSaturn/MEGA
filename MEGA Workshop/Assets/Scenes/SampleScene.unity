@@ -1513,6 +1513,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8363791183373438607, guid: d111cb30f042fc44a9cde5f3cac9f314, type: 3}
+      propertyPath: position.x
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8363791183373438607, guid: d111cb30f042fc44a9cde5f3cac9f314, type: 3}
       propertyPath: rotation.x
       value: 0
       objectReference: {fileID: 0}
