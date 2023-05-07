@@ -14,12 +14,14 @@ public class ObjectTransformation : MonoBehaviour
     public Matrix4by4 rotationMatrix;
     public float angle;
     private Quat rotationQuat;
+    public Quat currentQuat;
 
     void Start()
     {
         MeshFilter MF = GetComponent<MeshFilter>();
         MF.sharedMesh = Instantiate(meshInstance);
         modelSpaceVertices = MF.sharedMesh.vertices;
+        rotationQuat = new Quat(angle, rotation);
         if (gameObject.activeSelf)
         {
             scale.x = 1;
@@ -74,8 +76,12 @@ public class ObjectTransformation : MonoBehaviour
         //Matrix4by4 yawMatrix = yawQuat.ToRotationMatrix();
 
         //Matrix4by4 rotationMatrix = yawMatrix * (pitchMatrix * rollMatrix);
-
+        if(angle >= 360)
+        {
+            angle = 0;
+        }    
         rotationQuat = Quat.FromAxisToQuat(angle, rotation);
+        currentQuat = rotationQuat;
 
         rotationMatrix = rotationQuat.ToRotationMatrix();
         Matrix4by4 scaleMatrix = new Matrix4by4(new Vector3(1, 0, 0) * scale.x, new Vector3(0, 1, 0) * scale.y, new Vector3(0, 0, 1) * scale.z, Vector3.zero);
@@ -119,9 +125,8 @@ public class ObjectTransformation : MonoBehaviour
     }
     public Quat GetCurrentQuat()
     {
-        Quat rv = new Quat(0, 0, 0, 0);
         //rv = Matrix4by4.Matrix4by4ToQuat(rotationMatrix);
-        Quat.FromUnityQuat(currentObject.transform.rotation);
-        return rv;
+        //Quat.FromUnityQuat(currentObject.transform.rotation);
+        return currentQuat;
     }
 }
