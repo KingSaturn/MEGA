@@ -13,7 +13,7 @@ public class ObjectTransformation : MonoBehaviour
     public Vector4 v4transformation;
     public Matrix4by4 rotationMatrix;
     public float angle;
-    private Quat rotationQuat;
+    public Quat rotationQuat;
     public Quat currentQuat;
 
     void Start()
@@ -34,8 +34,8 @@ public class ObjectTransformation : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(1))
         {
-            //Cursor.lockState = CursorLockMode.Confined;
-            //Cursor.visible = false;
+        //    Cursor.lockState = CursorLockMode.Confined;
+        //    Cursor.visible = false;
 
         }
         if(Input.GetMouseButtonUp(1))
@@ -76,11 +76,11 @@ public class ObjectTransformation : MonoBehaviour
         //Matrix4by4 yawMatrix = yawQuat.ToRotationMatrix();
 
         //Matrix4by4 rotationMatrix = yawMatrix * (pitchMatrix * rollMatrix);
-        if(angle >= 360)
-        {
-            angle = 0;
-        }    
-        rotationQuat = Quat.FromAxisToQuat(angle, rotation);
+
+        //rotationQuat = Quat.FromAxisToQuat(angle, rotation);
+        //Quat yawQuat = new Quat(Time.deltaTime, 0, 1, 0);
+        //rotationQuat = yawQuat * rotationQuat;
+
         currentQuat = rotationQuat;
 
         rotationMatrix = rotationQuat.ToRotationMatrix();

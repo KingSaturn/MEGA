@@ -33,7 +33,7 @@ public class Quat
     public static Quat operator*(Quat r, Quat s)
     {
         Quat rv = new Quat(0, new Vector3());
-        rv.w = s.w * r.w + ((s.x * r.x) + (s.y * r.y) + (s.z * r.z));
+        rv.w = s.w * r.w - ((s.x * r.x) + (s.y * r.y) + (s.z * r.z));
         rv.x = s.w * r.x + (r.w * s.x) + ((r.y * s.z) - (r.z * s.y));
         rv.y = s.w * r.y + (r.w * s.y) + ((r.z * s.x) - (r.x * s.z));
         rv.z = s.w * r.z + (r.w * s.z) + ((r.x * s.y) - (r.y * s.x));
@@ -62,9 +62,20 @@ public class Quat
         Vector4 returnVector = new Vector4();
         float halfAngle = Mathf.Acos(w);
         returnVector.w = halfAngle * 2;
-        returnVector.x = x / Mathf.Sin(halfAngle);
-        returnVector.y = y / Mathf.Sin(halfAngle);
-        returnVector.z = z / Mathf.Sin(halfAngle);
+        float s = Mathf.Sqrt(1 - w * w);
+        if (s < 0.0001f)
+        {
+            returnVector.x = 1;
+            returnVector.y = 0;
+            returnVector.z = 0;
+        }
+        else
+        {
+            returnVector.x = x / s;
+            returnVector.y = y / s;
+            returnVector.z = z / s;
+        }
+
         return returnVector;
     }
     public Quat InverseQuat()

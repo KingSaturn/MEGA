@@ -62,7 +62,8 @@ public class MathsLib : MonoBehaviour
     }
     public static Vector2 CrossProduct(Vector2 v)
     {
-        return new Vector2(v.y, -v.x);
+        float result = v.x * v.y;
+        return new Vector2(result, -result);
     }
     public static float Length(Vector2 v)
     {

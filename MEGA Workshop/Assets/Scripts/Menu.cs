@@ -16,10 +16,10 @@ public class Menu : MonoBehaviour
     public TMPro.TextMeshProUGUI itemText;
     Vector2 lastDirection;
     Vector2 currentDirection;
-    Vector2 direction;
-    Quaternion cQuat;
     Quat currentQuat;
     Quat outputQuat;
+    Quat pitchQuat;
+    Quat yawQuat;
     Vector4 outputVector;
     Vector2 newDirection;
     void Start()
@@ -69,29 +69,30 @@ public class Menu : MonoBehaviour
             if(newDirection != Vector2.zero)
             {
 
-                float angle = MathsLib.Length(newDirection);
-                Vector3 outputAxis;
-                var direction = newDirection.normalized;
+                float angle = MathsLib.Length(currentDirection);
+                //Vector3 outputAxis;
+                Vector2 direction = currentDirection.normalized;
 
-                outputAxis = MathsLib.CrossProduct(direction);
-                outputQuat = new Quat(angle, outputAxis);
+                //outputAxis = MathsLib.CrossProduct(currentDirection);
+
+                yawQuat = new Quat(currentDirection.y, 1, 0, 0);
+                pitchQuat = new Quat(-currentDirection.x, 0,1,0);
+
+                outputQuat = pitchQuat * yawQuat;
 
                 Quat resultQuat = outputQuat * currentQuat;
 
-                outputVector = resultQuat.AxisFromQuat();
-
+                transformRef.rotationQuat = resultQuat;
+                //outputVector = resultQuat.AxisFromQuat();
+                
 
                 //outputQuat = new Quaternion(outputAxis.x, outputAxis.y, outputAxis.z, angle);
                 //Quaternion resultQuat = outputQuat * cQuat;
 
-                //outputVector = MathsLib.AxisFromQuat(resultQuat);
-
-                transformRef.angle += outputVector.w / 100;
-                transformRef.rotation.x = outputVector.x;
-                transformRef.rotation.y = outputVector.y;
-                transformRef.rotation.z = outputVector.z;
-
-                //transformRef.v4transformation = outputVector;
+                //transformRef.angle += outputVector.w / 100;
+                //transformRef.rotation.x = outputVector.x;
+                //transformRef.rotation.y = outputVector.y;
+                //transformRef.rotation.z = outputVector.z;
             }
         }
     }
