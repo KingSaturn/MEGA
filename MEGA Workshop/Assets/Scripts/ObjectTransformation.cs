@@ -34,14 +34,14 @@ public class ObjectTransformation : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(1))
         {
-        //    Cursor.lockState = CursorLockMode.Confined;
-        //    Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
 
         }
         if(Input.GetMouseButtonUp(1))
         {
-            //Cursor.lockState = CursorLockMode.None;
-            //Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         if (scale.x >= 0 && scale.y >= 0 && scale.z >= 0)
         {
