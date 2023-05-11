@@ -76,6 +76,7 @@ public class Menu : MonoBehaviour
                 //outputAxis = MathsLib.CrossProduct(currentDirection);
 
                 yawQuat = new Quat(currentDirection.y, 1, 0, 0);
+
                 pitchQuat = new Quat(-currentDirection.x, 0,1,0);
 
                 outputQuat = pitchQuat * yawQuat;
